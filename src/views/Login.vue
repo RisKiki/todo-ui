@@ -1,14 +1,14 @@
 <template>
-  Home
-  <TodoList />
+  <div class="flex">
+
+  </div>
 </template>
 
 <script>
-import TodoList from '@/components/TodoList.vue'
 export default {
-  name: 'Home',
+  name: 'Login',
   components: {
-    TodoList
+    
   },
   setup() {
 
@@ -17,5 +17,10 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/scss/variables';
+
+.flex {
+  display: flex;
+}
 
 </style>

@@ -1,16 +1,14 @@
 <template>
-  Home
-  <TodoList />
+  SignUp
 </template>
 
 <script>
-import TodoList from '@/components/TodoList.vue'
 export default {
-  name: 'Home',
+  name: 'SignUp',
   components: {
-    TodoList
+    
   },
-  setup() {
+  setup(props,ctx) {
 
   }
 }
