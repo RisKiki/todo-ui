@@ -35,6 +35,14 @@ export default new Vuex.Store({
     },
     setCurrentTodoList(state, currentTodoList) {
       state.currentTodoList = currentTodoList;
+    },
+    addTodo(state,payload) {
+      const todo = payload.todo;
+      const todoList = payload.todoList;
+
+      state.currentTodo = todo
+      state.currentTodoList = todoList
+
     }
   },
   actions: {
@@ -56,6 +64,22 @@ export default new Vuex.Store({
       if (res.status !== 200) {
         console.log("ERROR updateTodoList")
       }
+    },
+    async addTodo(state, payload) {
+      const headers = { "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InlleWUiLCJwYXNzd29yZCI6IiQ1JHJvdW5kcz01MzUwMDAkZkN3OUowQUdkVXlhZzlwcyRWTzRhbnh4SVhQbXZFVlovYUZiSkpPa0lQaXNETk5BckRwcnlXT3ZDRkI3In0.v0XnMZkle3OV94KthhVA81kO43oMLAe6Bs_HCrZx_8E"}
+      
+      const url = 'http://localhost:5000/lists/todos/'+payload.todoList.id
+      const body = {
+        name : payload.todo.name,
+        description : payload.todo.description
+      } 
+      const res = await axios.put(url, body , { headers })
+      if (res.data.status === 200) {
+        state.commit("addTodo", {todo : res.data.data.todo, todoList : res.data.data.updated_todo_list})
+      } else {
+        console.log("error", res.data)
+      }
+
     }
   },
   modules: {
