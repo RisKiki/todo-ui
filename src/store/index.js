@@ -48,13 +48,14 @@ export default new Vuex.Store({
       const res = await axios.get('http://localhost:5000/lists/'+id, { headers })
       state.commit('setCurrentTodoList',res.data.data.todo_list)
     },
-    async setTodoList(state, todoList) {
+    async updateTodoList(state, todoList) {
       const headers = { "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InlleWUiLCJwYXNzd29yZCI6IiQ1JHJvdW5kcz01MzUwMDAkZkN3OUowQUdkVXlhZzlwcyRWTzRhbnh4SVhQbXZFVlovYUZiSkpPa0lQaXNETk5BckRwcnlXT3ZDRkI3In0.v0XnMZkle3OV94KthhVA81kO43oMLAe6Bs_HCrZx_8E"}
       
-      console.log("todoList in actions", todoList)
-      const res = await axios.get('http://localhost:5000/lists/'+todoList.id, todoList , { headers })
-      console.log("res" , res)
-      this.setTodoLists(state);
+      const url = 'http://localhost:5000/lists/'+todoList.id
+      const res = await axios.patch(url, todoList , { headers })
+      if (res.status !== 200) {
+        console.log("ERROR updateTodoList")
+      }
     }
   },
   modules: {

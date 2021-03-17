@@ -53,7 +53,12 @@ export default {
         },
         validate() {
             this.switchMode();
-            this.$store.dispatch('setTodoList', this.todoList)
+            const newTodoList = {
+                id : this.todoList.id,
+                name : this.todoList.name,
+                todo_list : this.todoList.todo_list
+            }
+            this.$store.dispatch('updateTodoList', newTodoList)
         }
     }
 }
