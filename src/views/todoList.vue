@@ -1,5 +1,6 @@
 <template>
   <div class="todoLists">
+
     <router-link :to="{name : 'todoLists'}" tag="div">
           <div class="go-back"><i class="fas fa-arrow-left"></i> Revenir à mes listes</div>
     </router-link>
@@ -13,12 +14,18 @@
     <div class="date-creation">Crée le : {{ getDate() }}</div>
 
     <div class="flex">
+
         <div class="block">
             <div class="item" v-for="todo in todoList.todo_list" :key="todo.id">
-                <todoPreview :todo="todo"/>
+                <todoPreview @editTodoClicked="editTodo" :todo="todo"/>
             </div>
         </div>
-        <div class="block flex block-2">
+
+        <div class="block-new-todo">
+
+            <div class="title">
+                Nouveau Todo !
+            </div>
 
             <div class="nom">
                 <p class="item-label">Nom du todo</p>
@@ -33,7 +40,7 @@
             </div>
 
             <div class="block-add-todo">
-                <button class="btn-add-todo" @click="addTodo()"><i class="fas fa-plus"></i> Ajouter un todo</button>
+                <button class="btn-add-todo" :disabled="newTodo.name.length ===0" @click="addTodo()"><i class="fas fa-plus"></i> Ajouter un todo</button>
             </div>
 
         </div>
@@ -43,12 +50,15 @@
         <button class="btn-delete-list">Supprimer cette liste <i class="fas fa-trash"></i></button>
     </div>
 
+    <modalEditTodo :todo="todoToEdit" :todoListid="todoList.id" :activated="editTodoMode" @exit="closeModal"/>
+
   </div>
 </template>
 
 
 <script>
 import todoPreview from "@/components/todoPreview.vue"
+import modalEditTodo from "@/components/modalEditTodo.vue"
 
 
 export default {
@@ -58,17 +68,20 @@ export default {
     newTodo : {
         name : "",
         description : ""
-    }
+    },
+    todoToEdit : {
+        name : "",
+        description : ""
+    },
+    editTodoMode : false
   }),
   components: {
-        todoPreview
+        todoPreview,
+        modalEditTodo
   },
   computed: {
     todoList() {
         return this.$store.getters.getTodoList;
-    },
-    idTodo() {
-        return this.$route.params.id
     }
   },
   mounted() {
@@ -105,6 +118,23 @@ export default {
             this.$store.dispatch('delTodoList', { todoList : this.todoList})
 
             this.$router.push({path:'/'})
+        },
+        editTodo({todo}) {
+            this.todoToEdit = todo
+            this.editTodoMode = true;
+        },
+        closeModal(payload) {
+            this.editTodoMode = false
+
+            if (payload.isToUpdate) {
+                this.$store.dispatch('updateTodo', {
+                    todo : {
+                        id : payload.todo.id,
+                        name : payload.todo.name,
+                        description : payload.todo.description
+                    }
+                })
+            }
         }
     }
 }
@@ -128,6 +158,7 @@ export default {
 .flex {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .inline {
@@ -156,15 +187,19 @@ export default {
 }
 
 .block {
-    height: 500px;
+    min-height: 500px;
     width: 400px;
     margin: auto;
     background-color: #BB9457;
 }
 
-.block-2 {
+.block-new-todo {
     display: flex;
     justify-content: center;
+    min-height: 500px;
+    width: 400px;
+    background-color: #BB9457;
+    flex-wrap: wrap;
 }
 
 .block-add-todo{ 
@@ -205,9 +240,18 @@ textarea {
     box-shadow: 0px 0px 1px 1px black;
 }
 
+.btn-add-todo:disabled {
+    box-shadow: none;
+    cursor: auto;
+    color: rgb(104, 104, 104);
+    border-color: rgb(104, 104, 104);
+    background-color: #b19973;
+}
+
 .go-back {
     cursor: pointer;
     font-size: 30px;
+    margin-top: 10px;
 }
 
 .go-back:hover {
@@ -217,6 +261,7 @@ textarea {
 .delete-list {
     text-align: center;
     margin-top: 5%;
+    margin-bottom: 5%;
 }
 
 .btn-delete-list {

@@ -1,8 +1,11 @@
 <template>
   <div class="container">
-    <div class="name">{{ todo.name }}</div>
-    <div class="description">{{ todo.description }}</div>
-    <div class="trash"><i class="fas fa-trash" @click="deleteTodo()"></i></div>
+      <div class="wrapper">
+        <div class="name">{{ todo.name }}</div>
+        <div class="trash"><i class="fas fa-trash" @click="deleteTodo()"></i></div>
+        <div class="edit"><i class="fas fa-edit" @click="editTodo()"></i></div>
+      </div>
+      <div class="description">{{ todo.description }}</div>
   </div>
 </template>
 
@@ -15,9 +18,15 @@ export default {
   props: {
     todo : Object
   },
+  data: () => ({
+    editMode : false
+  }),
   methods: {
     deleteTodo() {
       this.$store.dispatch('deleteTodo', {todo: this.todo})
+    },
+    editTodo() {
+      this.$emit('editTodoClicked', {todo : this.todo})
     }
   }
 }
@@ -25,7 +34,6 @@ export default {
 
 <style scoped>
 .container {
-    display: grid;
     border: 1px solid black;
     background-color: rgba(111,29,27,1);
     font-size: 20px;
@@ -36,27 +44,50 @@ export default {
     cursor: pointer;
 }
 
+.wrapper {
+    display: grid;
+    grid-template-columns: 10fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: 
+    "name edit trash";
+}
+
 .name {
-  grid-column: 1 / 20;
-  grid-row: 1;
+  grid-area: name;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-weight: bold;
   margin-bottom: 2%;
   margin: 5px;
 }
 
 .description {
-  grid-column: 1 / 20;
-  grid-row: 2;
-  white-space: nowrap;
+  grid-area: description;
+  white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 5px;
 }
+
 .trash {
-  grid-column: 20 ;
-  grid-row: 1;
+  display: inline-block;
+  grid-area: trash;
   text-align: right;
   margin: 5px;
+}
+
+.edit {
+  display: inline-block;
+  grid-area: edit;
+  text-align: right;
+  margin: 5px;
+}
+
+.actions {
+  grid-column: 2/20 ;
+  grid-row: 1;
+  margin: 5px;
+  background-color: red;
 }
 
 i:hover {
