@@ -214,6 +214,7 @@ export default {
     text-align: center;
     flex: 1;
 }
+
 .nom{ 
     text-align: center;
     flex: 1;

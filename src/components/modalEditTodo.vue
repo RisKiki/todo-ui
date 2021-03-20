@@ -4,7 +4,7 @@
       <div class="modal-container">
 
         <div class="modal-header">
-          <div>Modification d'un todo</div>
+          <div>Modification d'un Todo</div>
         </div>
 
         <div class="modal-body">
@@ -58,12 +58,48 @@ export default {
 
 <style scoped>
 
+.description{ 
+    text-align: center;
+    flex: 1;
+}
+
+.nom{ 
+    text-align: center;
+    flex: 1;
+    margin: auto;
+}
+
+textarea {
+    width: 350px;
+    height: 280px;
+    box-sizing:border-box
+}
+
+.modal-footer {
+  text-align: center;
+}
+
+button {
+  border: solid black 1px;
+  font-size: 20px;
+  padding: 1%;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #bb9557a9;
+  margin : 2%;
+}
+
+button:hover {
+    background-color: #BB9457;
+    box-shadow: 0px 0px 1px 1px black;
+}
+
 .modal-content {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  width: 60%;
 }
 
 .modal-mask {
@@ -88,23 +124,24 @@ export default {
 }
 
 .modal-container {
-  width: 300px;
+  width: 40%;
   margin: 0px auto;
   padding: 20px 30px;
-  background-color: #fff;
+  background-color: #BB9457;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
 
-.modal-header h3 {
-  margin-top: 0;
-  color: #42b983;
+.modal-header {
+  text-align: center;
+  font-size: 40px;
 }
 
 .modal-body {
   margin: 20px 0;
+  font-size: 20px;
 }
 
 .modal-default-button {
