@@ -1,5 +1,9 @@
 <template>
   <div class="todoLists">
+    <router-link :to="{name : 'todoLists'}" tag="div">
+          <div class="go-back"><i class="fas fa-arrow-left"></i> Revenir à mes listes</div>
+    </router-link>
+
     <div class="title">
         <div v-if="!editMode" class="inline">{{ todoList.name }}</div>
         <i v-if="!editMode" @click="switchMode()" class="fas fa-edit icon"></i>
@@ -193,6 +197,15 @@ textarea {
 
 .icon-add-todo {
     margin-right: 10px;
+}
+
+.go-back {
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.go-back:hover {
+    text-decoration: underline;
 }
 
 </style>

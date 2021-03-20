@@ -29,6 +29,5 @@ export default {
 .title:hover {
   cursor: pointer;
   color: #ffe6a78a;
-
 }
 </style>

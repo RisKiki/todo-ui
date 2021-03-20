@@ -46,7 +46,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async setTodoLists(state) {
+    async getTodoLists(state) {
       const headers = { "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InlleWUiLCJwYXNzd29yZCI6IiQ1JHJvdW5kcz01MzUwMDAkZkN3OUowQUdkVXlhZzlwcyRWTzRhbnh4SVhQbXZFVlovYUZiSkpPa0lQaXNETk5BckRwcnlXT3ZDRkI3In0.v0XnMZkle3OV94KthhVA81kO43oMLAe6Bs_HCrZx_8E"}
       const res = await axios.get('http://localhost:5000/lists', { headers })
       state.commit('setTodoLists',res.data.data)
@@ -74,12 +74,27 @@ export default new Vuex.Store({
         description : payload.todo.description
       } 
       const res = await axios.put(url, body , { headers })
+      console.log(res.data.data)
       if (res.data.status === 200) {
         state.commit("addTodo", {todo : res.data.data.todo, todoList : res.data.data.updated_todo_list})
       } else {
         console.log("error", res.data)
       }
 
+    },
+    async createTodoList(state, {name}) {
+      const headers = { "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InlleWUiLCJwYXNzd29yZCI6IiQ1JHJvdW5kcz01MzUwMDAkZkN3OUowQUdkVXlhZzlwcyRWTzRhbnh4SVhQbXZFVlovYUZiSkpPa0lQaXNETk5BckRwcnlXT3ZDRkI3In0.v0XnMZkle3OV94KthhVA81kO43oMLAe6Bs_HCrZx_8E"}
+      
+      const url = 'http://localhost:5000/lists'
+      const body = {
+        name
+      } 
+      const res = await axios.put(url, body , { headers })
+      if (res.data.status === 200) {
+        state.dispatch('getTodoLists')
+      } else {
+        console.log("error", res.data)
+      }
     }
   },
   modules: {
