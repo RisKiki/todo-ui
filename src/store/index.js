@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user : {
-        username : "salut",
+        username : "",
         password : "",
         token : ""
     },
@@ -74,7 +74,6 @@ export default new Vuex.Store({
         description : payload.todo.description
       } 
       const res = await axios.put(url, body , { headers })
-      console.log(res.data.data)
       if (res.data.status === 200) {
         state.commit("addTodo", {todo : res.data.data.todo, todoList : res.data.data.updated_todo_list})
       } else {
@@ -144,6 +143,22 @@ export default new Vuex.Store({
       } else {
         console.log("error", res.data)
       }
+    },
+    async login(state, payload) {
+      const url = 'http://localhost:5000/login'
+
+      const body = {
+        username : payload.user.username,
+        password : payload.user.password
+      }
+
+      const res = await axios.post(url, body)
+      if (res.data.status === 200) {
+        state.commit('setToken', res.data.data.token)
+        state.commit('setUser', res.data.data.user)
+      } else {
+        return res.data
+      }
     }
   },
   modules: {
@@ -154,5 +169,6 @@ export default new Vuex.Store({
     getCurrentTodo: state => state.currentTodo,
     getTodoLists: state => state.todoLists,
     getTodoList: state => state.currentTodoList,
+    isLogged: state => state.user.token !== ''
   }
 })

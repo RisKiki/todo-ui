@@ -35,7 +35,7 @@
 <script>
 
 export default {
-  name: 'todo',
+  name: 'modalEditTodo',
   props: {
     todo : Object,
     todoListid : String,
@@ -43,10 +43,6 @@ export default {
   },
   methods: {
     validate(confirmed) {
-      if (confirmed) {
-          console.log('update todo')
-      }
-
       this.$emit("exit", {
         isToUpdate : confirmed,
         todo : this.todo
