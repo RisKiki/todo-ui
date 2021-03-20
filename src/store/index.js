@@ -159,6 +159,16 @@ export default new Vuex.Store({
       } else {
         return res.data
       }
+    },
+    async account(state, payload) {
+      const url = 'http://localhost:5000/account'
+
+      const body = {
+        username : payload.user.username,
+        password : payload.user.password
+      }
+
+      return (await axios.post(url, body)).data
     }
   },
   modules: {

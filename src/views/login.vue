@@ -43,6 +43,10 @@
           <p>{{ errorRegister.message }}</p>
         </div>
 
+        <div class="success" v-if="succesRegister">
+          <p>Compte crée avec succès !</p>
+        </div>
+
         <div>
           <button class="item-button" type="submit">S'enregistrer</button>
         </div>
@@ -81,7 +85,8 @@ export default {
     errorRegister : {
       code : 200,
       message : ""
-    }
+    },
+    succesRegister : false
   }),
   computed: {
     isLogged() {
@@ -106,7 +111,21 @@ export default {
       })
     },
     account() {
-
+      this.$store.dispatch('account', {
+        user : {
+          username : this.userCreation.username,
+          password : this.userCreation.password
+        }
+      }).then((result) => {
+        if (result.status === 200) {
+          this.succesRegister = true
+        } else {
+          this.errorRegister = {
+            code : result.status,
+            message : result.message
+          }
+        }
+      })
     },
     disconnect() {
       this.$store.commit('setUser', {})
@@ -190,6 +209,10 @@ export default {
 
 .error {
   color: rgb(143, 0, 0);
+}
+
+.success {
+  color:  rgb(23, 117, 0);
 }
 
 .title {
