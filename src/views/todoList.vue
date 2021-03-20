@@ -32,8 +32,8 @@
                 </textarea>
             </div>
 
-            <div class="block-add-todo" @click="addTodo()">
-                <button class="btn-add-todo"><i class="fas fa-plus"></i> Ajouter un todo</button>
+            <div class="block-add-todo">
+                <button class="btn-add-todo" @click="addTodo()"><i class="fas fa-plus"></i> Ajouter un todo</button>
             </div>
 
         </div>
@@ -226,6 +226,10 @@ textarea {
     cursor: pointer;
     border-radius: 10px;
     background-color: #ff000080;
+}
+
+.btn-delete-list:hover {
+    box-shadow: 0px 0px 1px 1px black;
 }
 
 

@@ -107,6 +107,25 @@ export default new Vuex.Store({
       } else {
         console.log("error", res.data)
       }
+    },
+    async deleteTodo(state, {todo}) {
+      const headers = { "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InlleWUiLCJwYXNzd29yZCI6IiQ1JHJvdW5kcz01MzUwMDAkZkN3OUowQUdkVXlhZzlwcyRWTzRhbnh4SVhQbXZFVlovYUZiSkpPa0lQaXNETk5BckRwcnlXT3ZDRkI3In0.v0XnMZkle3OV94KthhVA81kO43oMLAe6Bs_HCrZx_8E"}
+      
+      const todoList = state.getters.getTodoList
+      const url = 'http://localhost:5000/lists/todos/'+todoList.id+'/'+todo.id
+
+      const res = await axios.delete(url, { headers })
+      if (res.data.status === 200) {
+        state.dispatch('getTodoList', {id : todoList.id})
+      } else {
+        console.log("error", res.data)
+      }
+    },
+    resetCurrentTodo(state) {
+      state.commit('setCurrentTodo', {})
+    },
+    resetCurrentTodoList(state) {
+      state.commit('setCurrentTodoList', {})
     }
   },
   modules: {
