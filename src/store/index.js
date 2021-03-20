@@ -95,6 +95,18 @@ export default new Vuex.Store({
       } else {
         console.log("error", res.data)
       }
+    },
+    async delTodoList(state, {todoList}) {
+      const headers = { "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InlleWUiLCJwYXNzd29yZCI6IiQ1JHJvdW5kcz01MzUwMDAkZkN3OUowQUdkVXlhZzlwcyRWTzRhbnh4SVhQbXZFVlovYUZiSkpPa0lQaXNETk5BckRwcnlXT3ZDRkI3In0.v0XnMZkle3OV94KthhVA81kO43oMLAe6Bs_HCrZx_8E"}
+      
+      const url = 'http://localhost:5000/lists/'+todoList.id
+
+      const res = await axios.delete(url, { headers })
+      if (res.data.status === 200) {
+        state.dispatch('getTodoLists')
+      } else {
+        console.log("error", res.data)
+      }
     }
   },
   modules: {

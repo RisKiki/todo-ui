@@ -33,11 +33,16 @@
             </div>
 
             <div class="block-add-todo" @click="addTodo()">
-                <button class="btn-add-todo"><i class="fas fa-plus icon-add-todo"></i>Ajouter un todo</button>
+                <button class="btn-add-todo"><i class="fas fa-plus"></i> Ajouter un todo</button>
             </div>
 
         </div>
     </div>
+
+    <div class="delete-list" @click="delTodoList()">
+        <button class="btn-delete-list">Supprimer cette liste <i class="fas fa-trash"></i></button>
+    </div>
+
   </div>
 </template>
 
@@ -95,6 +100,11 @@ export default {
                 name : '',
                 description : ''
             }
+        },
+        delTodoList() {
+            this.$store.dispatch('delTodoList', { todoList : this.todoList})
+
+            this.$router.push({path:'/'})
         }
     }
 }
@@ -195,10 +205,6 @@ textarea {
     box-shadow: 0px 0px 1px 1px black;
 }
 
-.icon-add-todo {
-    margin-right: 10px;
-}
-
 .go-back {
     cursor: pointer;
     font-size: 30px;
@@ -207,5 +213,20 @@ textarea {
 .go-back:hover {
     text-decoration: underline;
 }
+
+.delete-list {
+    text-align: center;
+    margin-top: 5%;
+}
+
+.btn-delete-list {
+    border: solid black 1px;
+    font-size: 20px;
+    padding: 1%;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: #ff000080;
+}
+
 
 </style>

@@ -1,10 +1,11 @@
 <template>
+
     <router-link :to="{name : 'list', params: {id: todoList.id}}" tag="div">
       <div class="card">
         <div class="name">{{ todoList.name }}</div>
       </div>
     </router-link>
-
+    
 </template>
 
 
