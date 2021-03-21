@@ -42,22 +42,21 @@ export default new Vuex.Store({
 
       state.currentTodo = todo
       state.currentTodoList = todoList
-
     }
   },
   actions: {
     async getTodoLists(state) {
-      const headers = { "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InlleWUiLCJwYXNzd29yZCI6IiQ1JHJvdW5kcz01MzUwMDAkZkN3OUowQUdkVXlhZzlwcyRWTzRhbnh4SVhQbXZFVlovYUZiSkpPa0lQaXNETk5BckRwcnlXT3ZDRkI3In0.v0XnMZkle3OV94KthhVA81kO43oMLAe6Bs_HCrZx_8E"}
+      const headers = { "Authorization" : state.getters.getToken}
       const res = await axios.get('http://localhost:5000/lists', { headers })
       state.commit('setTodoLists',res.data.data)
     },
     async getTodoList(state, {id}) {
-      const headers = { "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InlleWUiLCJwYXNzd29yZCI6IiQ1JHJvdW5kcz01MzUwMDAkZkN3OUowQUdkVXlhZzlwcyRWTzRhbnh4SVhQbXZFVlovYUZiSkpPa0lQaXNETk5BckRwcnlXT3ZDRkI3In0.v0XnMZkle3OV94KthhVA81kO43oMLAe6Bs_HCrZx_8E"}
+      const headers = { "Authorization" : state.getters.getToken}
       const res = await axios.get('http://localhost:5000/lists/'+id, { headers })
       state.commit('setCurrentTodoList',res.data.data.todo_list)
     },
     async updateTodoList(state, todoList) {
-      const headers = { "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InlleWUiLCJwYXNzd29yZCI6IiQ1JHJvdW5kcz01MzUwMDAkZkN3OUowQUdkVXlhZzlwcyRWTzRhbnh4SVhQbXZFVlovYUZiSkpPa0lQaXNETk5BckRwcnlXT3ZDRkI3In0.v0XnMZkle3OV94KthhVA81kO43oMLAe6Bs_HCrZx_8E"}
+      const headers = { "Authorization" : state.getters.getToken}
       
       const url = 'http://localhost:5000/lists/'+todoList.id
       const res = await axios.patch(url, todoList , { headers })
@@ -66,7 +65,7 @@ export default new Vuex.Store({
       }
     },
     async addTodo(state, payload) {
-      const headers = { "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InlleWUiLCJwYXNzd29yZCI6IiQ1JHJvdW5kcz01MzUwMDAkZkN3OUowQUdkVXlhZzlwcyRWTzRhbnh4SVhQbXZFVlovYUZiSkpPa0lQaXNETk5BckRwcnlXT3ZDRkI3In0.v0XnMZkle3OV94KthhVA81kO43oMLAe6Bs_HCrZx_8E"}
+      const headers = { "Authorization" : state.getters.getToken}
       
       const url = 'http://localhost:5000/lists/todos/'+payload.todoList.id
       const body = {
@@ -82,7 +81,7 @@ export default new Vuex.Store({
 
     },
     async createTodoList(state, {name}) {
-      const headers = { "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InlleWUiLCJwYXNzd29yZCI6IiQ1JHJvdW5kcz01MzUwMDAkZkN3OUowQUdkVXlhZzlwcyRWTzRhbnh4SVhQbXZFVlovYUZiSkpPa0lQaXNETk5BckRwcnlXT3ZDRkI3In0.v0XnMZkle3OV94KthhVA81kO43oMLAe6Bs_HCrZx_8E"}
+      const headers = { "Authorization" : state.getters.getToken}
       
       const url = 'http://localhost:5000/lists'
       const body = {
@@ -96,7 +95,7 @@ export default new Vuex.Store({
       }
     },
     async delTodoList(state, {todoList}) {
-      const headers = { "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InlleWUiLCJwYXNzd29yZCI6IiQ1JHJvdW5kcz01MzUwMDAkZkN3OUowQUdkVXlhZzlwcyRWTzRhbnh4SVhQbXZFVlovYUZiSkpPa0lQaXNETk5BckRwcnlXT3ZDRkI3In0.v0XnMZkle3OV94KthhVA81kO43oMLAe6Bs_HCrZx_8E"}
+      const headers = { "Authorization" : state.getters.getToken}
       
       const url = 'http://localhost:5000/lists/'+todoList.id
 
@@ -108,7 +107,7 @@ export default new Vuex.Store({
       }
     },
     async deleteTodo(state, {todo}) {
-      const headers = { "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InlleWUiLCJwYXNzd29yZCI6IiQ1JHJvdW5kcz01MzUwMDAkZkN3OUowQUdkVXlhZzlwcyRWTzRhbnh4SVhQbXZFVlovYUZiSkpPa0lQaXNETk5BckRwcnlXT3ZDRkI3In0.v0XnMZkle3OV94KthhVA81kO43oMLAe6Bs_HCrZx_8E"}
+      const headers = { "Authorization" : state.getters.getToken}
       
       const todoList = state.getters.getTodoList
       const url = 'http://localhost:5000/lists/todos/'+todoList.id+'/'+todo.id
@@ -127,7 +126,7 @@ export default new Vuex.Store({
       state.commit('setCurrentTodoList', {})
     },
     async updateTodo(state,payload) {
-      const headers = { "Authorization" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InlleWUiLCJwYXNzd29yZCI6IiQ1JHJvdW5kcz01MzUwMDAkZkN3OUowQUdkVXlhZzlwcyRWTzRhbnh4SVhQbXZFVlovYUZiSkpPa0lQaXNETk5BckRwcnlXT3ZDRkI3In0.v0XnMZkle3OV94KthhVA81kO43oMLAe6Bs_HCrZx_8E"}
+      const headers = { "Authorization" : state.getters.getToken}
       
       const todoList = state.getters.getTodoList
       const url = 'http://localhost:5000/lists/todos/'+todoList.id+'/'+payload.todo.id
@@ -154,8 +153,12 @@ export default new Vuex.Store({
 
       const res = await axios.post(url, body)
       if (res.data.status === 200) {
-        state.commit('setToken', res.data.data.token)
-        state.commit('setUser', res.data.data.user)
+        const user = {
+          username : res.data.data.user.username,
+          password : res.data.data.user.password,
+          token : res.data.data.token,
+        }
+        state.commit('setUser', user)
       } else {
         return res.data
       }
